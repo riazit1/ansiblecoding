@@ -1,0 +1,17 @@
+---
+ - name: Create files using loops
+   hosts: localhost
+   become: yes
+   vars:
+     filenames: 
+       - file1.txt
+       - file2.txt
+       - file3.txt
+   tasks:
+     - name: create files 
+       file: 
+         name: 
+         path: "/home/bob/playbooks/{{ list }}"
+         state: touch
+         mode: '0755'
+       with_items: "{{ filenames }}"

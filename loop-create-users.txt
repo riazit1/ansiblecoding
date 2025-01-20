@@ -1,0 +1,35 @@
+---
+- name: Create multiple users with a loop
+  hosts: node1
+  become: true
+
+  tasks:
+    - name: Create a new user
+      ansible.builtin.user:
+        name: "{{ item }}"
+        state: present
+        create_home: true
+      loop:
+        - alice
+        - bob
+        - carol
+
+
+
+
+-rw-r--r--. 1 rhel rhel    1596 Jan 11 10:28 system_setup.yml
+[rhel@control ansible-files]$ ansible-navigator run loop_users.yml
+
+PLAY [Create multiple users with a loop] ***************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [node1]
+
+TASK [Create a new user] *******************************************************
+changed: [node1] => (item=alice)
+changed: [node1] => (item=bob)
+changed: [node1] => (item=carol)
+
+PLAY RECAP *********************************************************************
+node1                      : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
